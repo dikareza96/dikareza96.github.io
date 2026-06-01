@@ -1,36 +1,46 @@
 /* ============================================================================
-   tokens.css — Design system tokens (drop-in dari design-foundation.md §10.1)
+   tokens.css — Design system "Clinical Instrument"
+   North star: presisi instrumen medis/lab. Kertas-lab + tinta + satu aksen teal
+   (dipakai seperti indikator status). Mono load-bearing untuk label & readout.
+   Menggantikan sistem editorial "Kanara" sebelumnya. Lihat design-foundation.md.
    ============================================================================ */
 
 :root {
   /* ─── Color: Paper (background tonal layers) ─── */
-  --paper:      #F4EFE6;
-  --paper-warm: #EDE5D6;
-  --paper-deep: #E4DBC8;
+  --paper:      #F4F3EE;  /* lab paper white, warm-neutral */
+  --paper-warm: #ECEAE1;  /* panel fill */
+  --paper-deep: #E3E0D5;  /* raised / deep panel */
 
   /* ─── Color: Ink (text & strong elements) ─── */
-  --ink:        #1B1814;
-  --ink-soft:   #3B352E;
-  --ink-muted:  #645C52;  /* Darkened from #7A7266 untuk hit AA 4.5:1 di paper & paper-warm */
-  --ink-faint:  #8E867B;  /* Darkened from #A9A193, masih clearly faint vs muted */
+  --ink:        #16191C;  /* near-black ink */
+  --ink-soft:   #33373A;  /* secondary — AA on paper */
+  --ink-muted:  #565B60;  /* tertiary body */
+  --ink-faint:  #636970;  /* labels / faint — darkened to clear WCAG AA (~4.9:1 on paper) */
 
-  /* ─── Color: Accent ─── */
-  --sage:       #5F6A4A;  /* Darkened from #6F7A5A untuk hit AA pada italic-swap text */
-  --sage-bg:    #6F7A5A;  /* Original Kanara sage — only for non-text uses (eyebrow dot, highlighter) */
-  --ember:      #A3542B;  /* Hemat — max 2-3 instance per halaman */
-  --sand:       #D9C89A;  /* Hanya di dark inverse block */
+  /* ─── Color: Accent (the ONE accent — clinical teal, used like a status LED) ─── */
+  --vital:      #0B7D6F;  /* primary accent */
+  --vital-ink:  #075F54;  /* darker teal for text on paper (AA headroom) */
+  --vital-soft: rgba(11, 125, 111, 0.10);
+  --alarm:      #B4452F;  /* reserved alarm tone — used almost never */
+
+  /* ─── Backwards-compat aliases (older components referencing legacy names) ─── */
+  --sage:       var(--vital-ink);
+  --sage-bg:    var(--vital);
+  --ember:      var(--alarm);
+  --sand:       #D9C89A;
 
   /* ─── Rule (border) tiers ─── */
-  --rule:        rgba(27, 24, 20, 0.14);
-  --rule-soft:   rgba(27, 24, 20, 0.08);
-  --rule-strong: rgba(27, 24, 20, 0.28);
+  --rule:        #CDCABD;                      /* hairline, solid (instrument feel) */
+  --rule-soft:   rgba(27, 24, 20, 0.07);
+  --rule-strong: #B7B3A4;
+  --grid:        #DCD9CD;                       /* faint graph-paper grid line */
 
   /* ─── Typography (font families) ─── */
-  /* Fontsource self-hosted — naming "Variable" suffix dari package metadata. */
-  --font-display: "Fraunces Variable", "Instrument Serif", Georgia, serif;
-  --font-italic:  "Instrument Serif", "Fraunces Variable", Georgia, serif;
-  --font-body:    "Geist Variable", -apple-system, "Helvetica Neue", sans-serif;
-  --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-display: "Geist Variable", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-body:    "Geist Variable", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:    "Geist Mono Variable", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* legacy alias */
+  --font-italic:  var(--font-display);
 
   /* ─── Spacing scale ─── */
   --space-2xs: 4px;
@@ -38,38 +48,38 @@
   --space-sm:  16px;
   --space-md:  24px;
   --space-lg:  48px;
-  --space-xl:  96px;
-  --space-2xl: 128px;
+  --space-xl:  88px;
+  --space-2xl: 120px;
 
-  /* ─── Border radius ─── */
-  --radius-sm:   0.625rem; /* 10px */
-  --radius-md:   1.25rem;  /* 20px */
-  --radius-lg:   2rem;     /* 32px */
+  /* ─── Border radius — instruments aren't round ─── */
+  --radius-sm:   2px;
+  --radius-md:   3px;
+  --radius-lg:   4px;
   --radius-pill: 999px;
 
-  /* ─── Shadow stack (layered, Kanara approach) ─── */
-  --shadow-inset-light:  0 1px 0 rgba(255, 255, 255, 0.6) inset;
-  --shadow-inset-medium: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
-  --shadow-nav:          0 22px 60px -20px rgba(27, 24, 20, 0.18);
-  --shadow-glass:        0 28px 60px -24px rgba(27, 24, 20, 0.30);
-  --shadow-hero:         0 50px 100px -30px rgba(27, 24, 20, 0.22);
-  --shadow-cta:          0 50px 120px -40px rgba(27, 24, 20, 0.22);
-  --shadow-hover-tile:   0 40px 80px -32px rgba(27, 24, 20, 0.25);
-  --shadow-hover-btn:    0 18px 40px -12px rgba(27, 24, 20, 0.40);
+  /* ─── Shadow stack — flat, restrained (instruments don't float) ─── */
+  --shadow-inset-light:  none;
+  --shadow-inset-medium: none;
+  --shadow-nav:          0 1px 0 rgba(27, 24, 20, 0.04);
+  --shadow-glass:        0 1px 0 rgba(27, 24, 20, 0.04);
+  --shadow-hero:         none;
+  --shadow-cta:          0 1px 0 rgba(27, 24, 20, 0.04);
+  --shadow-hover-tile:   0 2px 0 var(--rule);
+  --shadow-hover-btn:    none;
 
-  /* ─── Motion: easing ─── */
-  --spring:    cubic-bezier(0.22, 0.68, 0, 1);   /* Punchy, default UI */
-  --ease-out:  cubic-bezier(0.32, 0.72, 0, 1);   /* Image scale, slow zoom */
-  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);   /* Reveal, calm */
+  /* ─── Motion: easing — minimal, like a gauge settling ─── */
+  --spring:    cubic-bezier(0.22, 0.68, 0, 1);
+  --ease-out:  cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* ─── Motion: duration ─── */
-  --dur-fast:   200ms;
-  --dur-base:   400ms;
-  --dur-medium: 700ms;
-  --dur-slow:   900ms;
-  --dur-slower: 1400ms;
+  --dur-fast:   140ms;
+  --dur-base:   240ms;
+  --dur-medium: 420ms;
+  --dur-slow:   700ms;
+  --dur-slower: 1100ms;
 
   /* ─── Layout ─── */
-  --container-max: 1240px;
-  --container-pad: 72px;
+  --container-max: 1180px;
+  --container-pad: 32px;
 }

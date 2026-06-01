@@ -19,7 +19,7 @@ const { projects } = Astro.props;
           project={project}
           index={index}
           total={projects.length}
-          reverse={index % 2 === 1}
+          reverse={false}
         />
         {index < projects.length - 1 && (
           <hr class="projects-divider" aria-hidden="true" />

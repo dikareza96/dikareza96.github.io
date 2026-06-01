@@ -83,12 +83,12 @@
   align-items: center;
   gap: 2rem;
   padding: 0.55rem 0.55rem 0.55rem 1.4rem;
-  background: rgba(244, 239, 230, 0.78);
+  background: rgba(244, 243, 238, 0.82);
   border: 1px solid var(--rule);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-md);
   backdrop-filter: blur(18px) saturate(1.2);
   -webkit-backdrop-filter: blur(18px) saturate(1.2);
-  box-shadow: var(--shadow-inset-light), var(--shadow-nav);
+  box-shadow: var(--shadow-nav);
   pointer-events: auto;
   max-width: calc(100% - 2.5rem);
 }
@@ -98,22 +98,23 @@
   align-items: center;
   gap: 0.55rem;
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 
 .nav-mark-glyph {
   width: 26px;
   height: 26px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: var(--ink);
   color: var(--paper);
   display: grid;
   place-items: center;
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-size: 1.05rem;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.95rem;
   line-height: 1;
 }
 
@@ -166,7 +167,7 @@
   display: none;
   width: 40px;
   height: 40px;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-md);
   position: relative;
   background: transparent;
 }
@@ -264,9 +265,9 @@ body.menu-open .mobile-menu li:nth-child(4) a { transition-delay: 0.31s; }
 body.menu-open .mobile-menu li:nth-child(5) a { transition-delay: 0.38s; }
 
 .mobile-menu em {
-  font-family: var(--font-italic);
-  font-style: italic;
-  color: var(--sage);
+  font-family: var(--font-display);
+  font-style: normal;
+  color: var(--vital-ink);
 }
 
 /* Forced-colors fallback */

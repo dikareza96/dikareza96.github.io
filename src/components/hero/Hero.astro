@@ -1,11 +1,11 @@
 ---
 // src/components/hero/Hero.astro
-// Hero split: kiri text + 2 CTA + 3-stat rail; kanan placeholder visual + 3 floating cards.
+// Clinical Instrument hero: eyebrow + title + lead + instrument readout strip,
+// followed by a calibration scale rendering the career as an instrument range.
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { profile } from "@data/profile";
 import Eyebrow from "@components/ui/Eyebrow.astro";
 import Button from "@components/ui/Button.astro";
-import HeroVisual from "@components/hero/HeroVisual.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -13,65 +13,107 @@ const t = useTranslations(lang);
 const workHref = lang === "id" ? "/karya" : "/en/work";
 const contactHref = `mailto:${profile.email}`;
 
-// Hero copy bilingual (final dari design-foundation §9.5)
 const copy = {
   id: {
     h1Pre: "Engineering yang ",
-    h1Italic: "tenang",
+    h1Em: "tenang",
     h1Post: " untuk sistem yang serius.",
     lead:
-      "Saya membangun sistem informasi rumah sakit dan rekam medis elektronik yang diandalkan tim klinis setiap hari. Tujuh tahun lintas-stack — PHP legacy, Bun/Hono/TypeScript modern, dan jahitan di antaranya.",
-    rail: [
-      { value: "2019", label: "Mulai" },
-      { value: "Kediri", label: "Lokasi" },
-      { value: "7 tahun", label: "Domain healthcare" },
+      "Saya membangun dan memodernisasi sistem inti rumah sakit — SIMRS, rekam medis elektronik, integrasi PACS. Presisi, terukur, dan bisa dipertanggungjawabkan di lingkungan dengan taruhan tinggi.",
+    readout: [
+      { k: "Mulai", v: "2019", sm: false },
+      { k: "Pengalaman", v: "7", u: "thn", sm: false },
+      { k: "Basis", v: "Kediri, ID", sm: true },
+      { k: "Fokus", v: "Healthcare", sm: true },
+    ],
+    calibCaption: "Rentang karier — terkalibrasi",
+    marks: [
+      { pos: 0, yr: "2019", ev: "Webane", cls: "start" },
+      { pos: 42.9, yr: "2022", ev: "RS Bhayangkara", cls: "" },
+      { pos: 85.7, yr: "2025", ev: "Modernisasi", cls: "" },
+      { pos: 100, yr: "2026", ev: "Sekarang", cls: "now end" },
     ],
   },
   en: {
     h1Pre: "Quiet engineering for ",
-    h1Italic: "high-stakes",
+    h1Em: "high-stakes",
     h1Post: " systems.",
     lead:
-      "I build hospital information systems and electronic medical records that clinical teams rely on daily. Seven years across the stack — legacy PHP, modern Bun/Hono/TypeScript, and the seams between.",
-    rail: [
-      { value: "2019", label: "Started" },
-      { value: "Kediri", label: "Based" },
-      { value: "7 years", label: "Healthcare" },
+      "I build and modernize hospital core systems — HIS, electronic medical records, PACS integration. Precise, measurable, and accountable in high-stakes environments.",
+    readout: [
+      { k: "Started", v: "2019", sm: false },
+      { k: "Experience", v: "7", u: "yrs", sm: false },
+      { k: "Based", v: "Kediri, ID", sm: true },
+      { k: "Focus", v: "Healthcare", sm: true },
+    ],
+    calibCaption: "Career range — calibrated",
+    marks: [
+      { pos: 0, yr: "2019", ev: "Webane", cls: "start" },
+      { pos: 42.9, yr: "2022", ev: "RS Bhayangkara", cls: "" },
+      { pos: 85.7, yr: "2025", ev: "Modernization", cls: "" },
+      { pos: 100, yr: "2026", ev: "Now", cls: "now end" },
     ],
   },
 }[lang];
+
+// minor ticks (visual cadence, ~1yr each across the span)
+const ticks = [0, 14.3, 28.6, 42.9, 57.1, 71.4, 85.7, 100];
+const majorTicks = [0, 42.9, 85.7, 100];
 ---
 
 <section class="hero">
   <div class="container">
-    <div class="hero-grid">
-      <div class="hero-content">
-        <Eyebrow text={t("section.profile")} />
+    <div class="hero-content">
+      <Eyebrow text={t("section.profile")} />
 
-        <h1 class="hero-title">
-          {copy.h1Pre}<em class="highlight">{copy.h1Italic}</em>{copy.h1Post}
-        </h1>
+      <h1 class="hero-title">
+        {copy.h1Pre}<em>{copy.h1Em}</em>{copy.h1Post}
+      </h1>
 
-        <p class="hero-lead">{copy.lead}</p>
+      <p class="hero-lead">{copy.lead}</p>
 
-        <div class="hero-ctas">
-          <Button href={workHref} withArrow={true}>{t("cta.viewWork")}</Button>
-          <Button href={contactHref} variant="ghost">{t("cta.getInTouch")}</Button>
-        </div>
-
-        <div class="hero-rail">
-          {
-            copy.rail.map((item) => (
-              <div class="hero-rail-item">
-                <p class="hero-rail-value">{item.value}</p>
-                <p class="hero-rail-label">{item.label}</p>
-              </div>
-            ))
-          }
-        </div>
+      <div class="hero-readout">
+        {
+          copy.readout.map((c) => (
+            <div class="cell">
+              <p class="k">{c.k}</p>
+              <p class:list={["v", { sm: c.sm }]}>
+                {c.v}{c.u && <span class="u">{c.u}</span>}
+              </p>
+            </div>
+          ))
+        }
       </div>
 
-      <HeroVisual />
+      <div class="hero-ctas">
+        <Button href={workHref} withArrow={true}>{t("cta.viewWork")}</Button>
+        <Button href={contactHref} variant="ghost">{t("cta.getInTouch")}</Button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="calib">
+      <div class="calib-rule"></div>
+      <p class="calib-caption">{copy.calibCaption}</p>
+      <div class="calib-scale">
+        <div class="calib-axis"></div>
+        {ticks.map((pos) => (
+          <span
+            class:list={["calib-tick", { major: majorTicks.includes(pos) }]}
+            style={`left:${pos}%`}
+          ></span>
+        ))}
+        {
+          copy.marks.map((m) => (
+            <div class:list={["calib-mark", m.cls]} style={`left:${m.pos}%`}>
+              {m.cls.includes("now") && <span class="nowdot"></span>}
+              <span class="yr">{m.yr}</span>
+              <span class="ev">{m.ev}</span>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>

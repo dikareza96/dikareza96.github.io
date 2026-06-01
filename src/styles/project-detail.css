@@ -56,19 +56,19 @@
 
 .project-detail-title {
   font-family: var(--font-display);
-  font-weight: 300;
-  font-size: clamp(2.8rem, 6vw, 5rem);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-weight: 600;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 1.06;
+  letter-spacing: -0.028em;
   color: var(--ink);
   max-width: 18ch;
 }
 
 .project-detail-title em {
-  font-family: var(--font-italic);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--sage);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--vital-ink);
 }
 
 .project-detail-pills {
@@ -182,27 +182,28 @@
 
 .project-detail-body h2 {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 2.8vw, 2.1rem);
   line-height: 1.15;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.022em;
   color: var(--ink);
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 .project-detail-body h2 em {
-  font-family: var(--font-italic);
-  font-style: italic;
-  color: var(--sage);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--vital-ink);
 }
 
 .project-detail-body h3 {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.35rem, 2.4vw, 1.65rem);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 2.2vw, 1.55rem);
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.018em;
   color: var(--ink);
   margin-top: 1rem;
   margin-bottom: 0.25rem;
@@ -218,22 +219,22 @@
 }
 
 .project-detail-body em {
-  font-family: var(--font-italic);
+  font-family: var(--font-body);
   font-style: italic;
-  color: var(--sage);
+  color: var(--ink);
 }
 
 .project-detail-body a {
-  color: var(--ink);
-  border-bottom: 1px solid var(--ink);
+  color: var(--vital-ink);
+  border-bottom: 1px solid var(--vital-ink);
   padding-bottom: 1px;
   transition: color var(--dur-base) var(--spring),
     border-color var(--dur-base) var(--spring);
 }
 
 .project-detail-body a:hover {
-  color: var(--sage);
-  border-color: var(--sage);
+  color: var(--ink);
+  border-color: var(--ink);
 }
 
 .project-detail-body ul,
@@ -276,10 +277,10 @@
 }
 
 .project-detail-body blockquote {
-  border-left: 2px solid var(--sage);
+  border-left: 2px solid var(--vital);
   padding-left: 1.25rem;
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-style: normal;
   color: var(--ink);
   line-height: 1.5;

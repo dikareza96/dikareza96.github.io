@@ -28,9 +28,9 @@
 
 .footer-brand h3 {
   font-family: var(--font-display);
-  font-size: 1.85rem;
-  font-weight: 400;
-  letter-spacing: -0.025em;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.022em;
 }
 
 .footer-brand p {
@@ -75,14 +75,14 @@
   color: var(--ink);
   text-align: center;
   margin: 3rem 0 1.5rem;
-  font-weight: 300;
+  font-weight: 600;
 }
 
 .footer-mark em {
-  font-family: var(--font-italic);
-  font-style: italic;
-  color: var(--sage);
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-style: normal;
+  color: var(--vital-ink);
+  font-weight: 600;
 }
 
 .footer-bottom {
