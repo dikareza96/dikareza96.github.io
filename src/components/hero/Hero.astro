@@ -1,0 +1,77 @@
+---
+// src/components/hero/Hero.astro
+// Hero split: kiri text + 2 CTA + 3-stat rail; kanan placeholder visual + 3 floating cards.
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { profile } from "@data/profile";
+import Eyebrow from "@components/ui/Eyebrow.astro";
+import Button from "@components/ui/Button.astro";
+import HeroVisual from "@components/hero/HeroVisual.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const workHref = lang === "id" ? "/karya" : "/en/work";
+const contactHref = `mailto:${profile.email}`;
+
+// Hero copy bilingual (final dari design-foundation §9.5)
+const copy = {
+  id: {
+    h1Pre: "Engineering yang ",
+    h1Italic: "tenang",
+    h1Post: " untuk sistem yang serius.",
+    lead:
+      "Saya membangun sistem informasi rumah sakit dan rekam medis elektronik yang diandalkan tim klinis setiap hari. Tujuh tahun lintas-stack — PHP legacy, Bun/Hono/TypeScript modern, dan jahitan di antaranya.",
+    rail: [
+      { value: "2019", label: "Mulai" },
+      { value: "Kediri", label: "Lokasi" },
+      { value: "7 tahun", label: "Domain healthcare" },
+    ],
+  },
+  en: {
+    h1Pre: "Quiet engineering for ",
+    h1Italic: "high-stakes",
+    h1Post: " systems.",
+    lead:
+      "I build hospital information systems and electronic medical records that clinical teams rely on daily. Seven years across the stack — legacy PHP, modern Bun/Hono/TypeScript, and the seams between.",
+    rail: [
+      { value: "2019", label: "Started" },
+      { value: "Kediri", label: "Based" },
+      { value: "7 years", label: "Healthcare" },
+    ],
+  },
+}[lang];
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <Eyebrow text={t("section.profile")} />
+
+        <h1 class="hero-title">
+          {copy.h1Pre}<em class="highlight">{copy.h1Italic}</em>{copy.h1Post}
+        </h1>
+
+        <p class="hero-lead">{copy.lead}</p>
+
+        <div class="hero-ctas">
+          <Button href={workHref} withArrow={true}>{t("cta.viewWork")}</Button>
+          <Button href={contactHref} variant="ghost">{t("cta.getInTouch")}</Button>
+        </div>
+
+        <div class="hero-rail">
+          {
+            copy.rail.map((item) => (
+              <div class="hero-rail-item">
+                <p class="hero-rail-value">{item.value}</p>
+                <p class="hero-rail-label">{item.label}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <HeroVisual />
+    </div>
+  </div>
+</section>

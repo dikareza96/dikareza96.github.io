@@ -1,0 +1,29 @@
+---
+// src/components/sections/MarkerBar.astro
+// Trust signal: 4 entries text-only (companies/alma mater).
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// 4 entries final dari LinkedIn
+const entries = [
+  "RS Bhayangkara Kediri",
+  "Harmoni Integra",
+  "Webane",
+  "Politeknik Kediri",
+];
+---
+
+<section class="marker">
+  <div class="container">
+    <div class="marker-grid">
+      <p class="marker-title">
+        {t("marker.title")} <em>{t("marker.titleItalic")}</em>
+      </p>
+      <div class="marker-list">
+        {entries.map((entry) => <span>{entry}</span>)}
+      </div>
+    </div>
+  </div>
+</section>

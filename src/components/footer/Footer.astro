@@ -1,0 +1,102 @@
+---
+// src/components/footer/Footer.astro
+// 4-col grid + big italic wordmark + bottom row dengan lang switcher.
+import { Github, Linkedin, Mail } from "lucide-astro";
+import { getLangFromUrl, useTranslations, getLocaleHref } from "@i18n/utils";
+import { profile } from "@data/profile";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const altLang = lang === "id" ? "en" : "id";
+const switchHref = getLocaleHref(altLang, Astro.url.pathname);
+
+const homeHref = lang === "id" ? "/" : "/en";
+const workHref = lang === "id" ? "/karya" : "/en/work";
+const contactHref = `mailto:${profile.email}`;
+
+const taglineDesc =
+  lang === "id"
+    ? "Membangun sistem rumah sakit dan perangkat lunak yang melayani niat manusia, bukan sebaliknya."
+    : "Building hospital systems and software that serves human intention — not the other way around.";
+
+const yearNow = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>{profile.studio}</h3>
+        <p>{taglineDesc}</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>{t("footer.colWork")}</h4>
+        <ul>
+          <li><a href={homeHref}>{t("nav.about")}</a></li>
+          <li><a href={workHref}>{t("nav.work")}</a></li>
+          <li><a href={contactHref}>{t("nav.contact")}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>{t("footer.colSocial")}</h4>
+        <ul>
+          <li>
+            <a href={profile.social.github} target="_blank" rel="noreferrer noopener">
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href={profile.social.linkedin} target="_blank" rel="noreferrer noopener">
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href={contactHref}>Email</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>{t("footer.colMore")}</h4>
+        <ul>
+          <li>
+            <a href={switchHref} hreflang={altLang}>
+              {altLang.toUpperCase()}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-mark" aria-hidden="true">
+      Hazte<em>ch.</em>
+    </div>
+
+    <div class="footer-bottom">
+      <span>
+        © {yearNow} {profile.studio}.{" "}
+        {lang === "id"
+          ? "Dibuat dengan niat baik di Kediri."
+          : "Made with intention in Kediri."}
+      </span>
+      <div class="footer-bottom-right">
+        <span class="lang-switcher" aria-label={t("a11y.languageSwitch")}>
+          <span aria-current="true">{lang.toUpperCase()}</span>
+          {" / "}
+          <a href={switchHref} hreflang={altLang}>{altLang.toUpperCase()}</a>
+        </span>
+        <a href={profile.social.github} aria-label="GitHub" target="_blank" rel="noreferrer">
+          <Github size={14} strokeWidth={1.5} />
+        </a>
+        <a href={profile.social.linkedin} aria-label="LinkedIn" target="_blank" rel="noreferrer">
+          <Linkedin size={14} strokeWidth={1.5} />
+        </a>
+        <a href={contactHref} aria-label="Email">
+          <Mail size={14} strokeWidth={1.5} />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

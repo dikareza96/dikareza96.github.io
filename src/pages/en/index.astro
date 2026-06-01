@@ -1,0 +1,26 @@
+---
+// src/pages/en/index.astro — Profile (English mirror)
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { profile } from "@data/profile";
+import Hero from "@components/hero/Hero.astro";
+import MarkerBar from "@components/sections/MarkerBar.astro";
+import Expertise from "@components/sections/Expertise.astro";
+import Experience from "@components/sections/Experience.astro";
+import Philosophy from "@components/sections/Philosophy.astro";
+import Manifesto from "@components/sections/Manifesto.astro";
+import ContactCTA from "@components/sections/ContactCTA.astro";
+
+const title = `${profile.name.en} — ${profile.role.en} | ${profile.studio}`;
+const description =
+  "I build hospital information systems and electronic medical records that clinical teams rely on daily. Seven years across the stack — legacy PHP, modern Bun/Hono/TypeScript.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Hero />
+  <MarkerBar />
+  <Expertise />
+  <Experience />
+  <Philosophy />
+  <Manifesto />
+  <ContactCTA />
+</BaseLayout>

@@ -1,0 +1,75 @@
+/* ============================================================================
+   tokens.css — Design system tokens (drop-in dari design-foundation.md §10.1)
+   ============================================================================ */
+
+:root {
+  /* ─── Color: Paper (background tonal layers) ─── */
+  --paper:      #F4EFE6;
+  --paper-warm: #EDE5D6;
+  --paper-deep: #E4DBC8;
+
+  /* ─── Color: Ink (text & strong elements) ─── */
+  --ink:        #1B1814;
+  --ink-soft:   #3B352E;
+  --ink-muted:  #645C52;  /* Darkened from #7A7266 untuk hit AA 4.5:1 di paper & paper-warm */
+  --ink-faint:  #8E867B;  /* Darkened from #A9A193, masih clearly faint vs muted */
+
+  /* ─── Color: Accent ─── */
+  --sage:       #5F6A4A;  /* Darkened from #6F7A5A untuk hit AA pada italic-swap text */
+  --sage-bg:    #6F7A5A;  /* Original Kanara sage — only for non-text uses (eyebrow dot, highlighter) */
+  --ember:      #A3542B;  /* Hemat — max 2-3 instance per halaman */
+  --sand:       #D9C89A;  /* Hanya di dark inverse block */
+
+  /* ─── Rule (border) tiers ─── */
+  --rule:        rgba(27, 24, 20, 0.14);
+  --rule-soft:   rgba(27, 24, 20, 0.08);
+  --rule-strong: rgba(27, 24, 20, 0.28);
+
+  /* ─── Typography (font families) ─── */
+  /* Fontsource self-hosted — naming "Variable" suffix dari package metadata. */
+  --font-display: "Fraunces Variable", "Instrument Serif", Georgia, serif;
+  --font-italic:  "Instrument Serif", "Fraunces Variable", Georgia, serif;
+  --font-body:    "Geist Variable", -apple-system, "Helvetica Neue", sans-serif;
+  --font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* ─── Spacing scale ─── */
+  --space-2xs: 4px;
+  --space-xs:  8px;
+  --space-sm:  16px;
+  --space-md:  24px;
+  --space-lg:  48px;
+  --space-xl:  96px;
+  --space-2xl: 128px;
+
+  /* ─── Border radius ─── */
+  --radius-sm:   0.625rem; /* 10px */
+  --radius-md:   1.25rem;  /* 20px */
+  --radius-lg:   2rem;     /* 32px */
+  --radius-pill: 999px;
+
+  /* ─── Shadow stack (layered, Kanara approach) ─── */
+  --shadow-inset-light:  0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  --shadow-inset-medium: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  --shadow-nav:          0 22px 60px -20px rgba(27, 24, 20, 0.18);
+  --shadow-glass:        0 28px 60px -24px rgba(27, 24, 20, 0.30);
+  --shadow-hero:         0 50px 100px -30px rgba(27, 24, 20, 0.22);
+  --shadow-cta:          0 50px 120px -40px rgba(27, 24, 20, 0.22);
+  --shadow-hover-tile:   0 40px 80px -32px rgba(27, 24, 20, 0.25);
+  --shadow-hover-btn:    0 18px 40px -12px rgba(27, 24, 20, 0.40);
+
+  /* ─── Motion: easing ─── */
+  --spring:    cubic-bezier(0.22, 0.68, 0, 1);   /* Punchy, default UI */
+  --ease-out:  cubic-bezier(0.32, 0.72, 0, 1);   /* Image scale, slow zoom */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);   /* Reveal, calm */
+
+  /* ─── Motion: duration ─── */
+  --dur-fast:   200ms;
+  --dur-base:   400ms;
+  --dur-medium: 700ms;
+  --dur-slow:   900ms;
+  --dur-slower: 1400ms;
+
+  /* ─── Layout ─── */
+  --container-max: 1240px;
+  --container-pad: 72px;
+}

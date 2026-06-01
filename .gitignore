@@ -1,0 +1,44 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# Playwright MCP artifacts
+.playwright-mcp/
+
+# OS / editor temp
+Thumbs.db
+*.swp
+*.swo
+
+# Temp / debug
+.tmp-*.md
+*.pid
+.DS_Store
+
+# Sensitive personal source (LinkedIn PDF contains private contact info)
+docs/Profile_linkedin.pdf
+docs/linkedin-extract.txt
+
+# Claude Code user-local settings
+.claude/

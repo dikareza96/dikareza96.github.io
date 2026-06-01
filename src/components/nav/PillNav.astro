@@ -1,0 +1,101 @@
+---
+// src/components/nav/PillNav.astro
+// Floating pill navigation dengan logo + links + CTA + hamburger toggle.
+import { Mail } from "lucide-astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { profile } from "@data/profile";
+import Button from "@components/ui/Button.astro";
+import MobileMenu from "@components/nav/MobileMenu.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Path prefix per locale
+const homeHref = lang === "id" ? "/" : "/en";
+const workHref = lang === "id" ? "/karya" : "/en/work";
+const contactHref = `mailto:${profile.email}`;
+
+// Active link detection
+const currentPath = Astro.url.pathname;
+const isHomeActive = currentPath === homeHref || currentPath === `${homeHref}/`;
+---
+
+<div class="nav-wrap">
+  <nav class="nav" aria-label="Main">
+    <a href={homeHref} class="nav-mark" aria-label={profile.studio}>
+      <span class="nav-mark-glyph" aria-hidden="true">H</span>
+      <span>Haztech.</span>
+    </a>
+
+    <ul class="nav-links">
+      <li>
+        <a href={homeHref} aria-current={isHomeActive ? "page" : undefined}>
+          {t("nav.about")}
+        </a>
+      </li>
+      <li><a href={workHref}>{t("nav.work")}</a></li>
+      <li><a href={contactHref}>{t("nav.contact")}</a></li>
+    </ul>
+
+    <div class="nav-utility">
+      <Button
+        href={contactHref}
+        variant="icon"
+        ariaLabel={t("nav.getInTouch")}
+        class="btn-icon"
+      >
+        <Mail size={18} strokeWidth={1.5} />
+      </Button>
+      <Button href={contactHref} withArrow={true} class="btn-nav">
+        {t("nav.getInTouch")}
+      </Button>
+      <button
+        class="hamburger"
+        aria-label={t("a11y.openMenu")}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        type="button"
+      >
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<MobileMenu />
+
+<script>
+  // Mobile menu toggle
+  const hamburger = document.querySelector(".hamburger") as HTMLButtonElement | null;
+  const body = document.body;
+
+  function toggleMenu() {
+    const isOpen = body.classList.toggle("menu-open");
+    if (hamburger) {
+      hamburger.setAttribute("aria-expanded", String(isOpen));
+      hamburger.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation menu" : "Open navigation menu"
+      );
+    }
+  }
+
+  hamburger?.addEventListener("click", toggleMenu);
+
+  // Close on Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && body.classList.contains("menu-open")) {
+      toggleMenu();
+    }
+  });
+
+  // Close on link click within mobile menu
+  document
+    .querySelectorAll<HTMLAnchorElement>(".mobile-menu a")
+    .forEach((link) => {
+      link.addEventListener("click", () => {
+        if (body.classList.contains("menu-open")) toggleMenu();
+      });
+    });
+</script>

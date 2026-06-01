@@ -1,0 +1,48 @@
+---
+title: "ToolKita Mobile — Tools Dokumen Offline"
+slug: "toolkita-mobile"
+lang: "id"
+year: 2026
+role: "Solo Engineer — Mobile"
+stack:
+  - "Expo SDK 56"
+  - "React Native 0.85"
+  - "TypeScript"
+  - "NativeWind"
+  - "ML Kit"
+  - "pdf-lib"
+  - "ed25519"
+summary: "Aplikasi pendamping ToolKita di HP — 12 tool dokumen yang semuanya diproses lokal tanpa upload. Scan dokumen, gabung/pisah PDF, OCR, tanda tangan, QR. Berbagi sistem lisensi ed25519 dengan versi web lewat verifikasi offline."
+coverAlt: "Layar aplikasi ToolKita Mobile dengan daftar tool dokumen"
+pubDate: 2026-05-28
+featured: true
+confidential: false
+status: "Active"
+links:
+  github: "https://github.com/dikareza96/toolkita-mobile"
+  caseStudy: true
+---
+
+ToolKita di web menyelesaikan banyak hal, tapi pekerjaan administrasi sering terjadi jauh dari meja: petugas memfoto dokumen di lapangan, perawat butuh scan berkas di ruangan. Untuk itu butuh aplikasi HP — dengan jaminan privasi yang sama.
+
+## Yang dibangun
+
+Aplikasi Android (Expo) dengan 12 tool dokumen yang sering dipakai di rumah sakit, instansi, dan sekolah:
+
+- **Scan Dokumen** — foto dokumen, auto-crop, jadi PDF rapi (ML Kit)
+- **Gabung & Pisah PDF** — kelola halaman tanpa aplikasi desktop
+- **OCR** — baca teks dari hasil scan, on-device
+- **Tanda Tangan** — tulis ttd dengan jari, tempel ke PDF
+- **QR Code, kompres, watermark, Bates numbering** — kebutuhan arsip dan akreditasi
+
+## Keputusan teknis
+
+**100% offline untuk pemrosesan inti.** Tidak ada outbound network call kecuali yang dimulai pengguna (share, simpan) atau sinkronisasi akun. Manipulasi PDF memakai pdf-lib (JavaScript murni), scan dan OCR memakai ML Kit on-device. Dokumen tidak pernah dikirim ke server.
+
+**Lisensi yang sama dengan web.** Kode aktivasi yang ditandatangani ed25519 di sisi web bisa diverifikasi di HP tanpa koneksi — kunci publik ditanam dalam aplikasi. Satu pembelian, berlaku di web dan mobile.
+
+**Disiplin dependensi.** Setiap library dicek lisensinya sebelum dipasang — hanya MIT, Apache, BSD, ISC, OFL. Library dengan lisensi restriktif ditolak karena audiens pemerintah dan rumah sakit menjalani audit.
+
+## Hasil
+
+Aplikasi berjalan dengan 97 test otomatis. Karena Expo SDK 56 dan React Native 0.85 masih baru, sebagian besar pekerjaan adalah menstabilkan native build (pinning Gradle, target JVM) — temuan yang didokumentasikan agar bisa diulang dengan andal.

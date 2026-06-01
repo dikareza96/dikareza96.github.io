@@ -1,0 +1,69 @@
+---
+// src/components/sections/Philosophy.astro
+// 3-card row: healthcare-grounded prinsip kerja.
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { philosophy } from "@data/philosophy";
+import Eyebrow from "@components/ui/Eyebrow.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const headCopy = {
+  id: {
+    title: ["Tiga ", "prinsip", " yang menuntun cara saya bekerja."],
+    lead: "Bukan template engineering generic. Lahir dari empat tahun menjaga sistem rumah sakit tetap berjalan.",
+  },
+  en: {
+    title: ["Three ", "principles", " that guide how I work."],
+    lead: "Not generic engineering templates. Born from four years keeping hospital systems running.",
+  },
+}[lang];
+
+// Helper untuk render title dengan italic-swap pada substring
+function splitTitle(full: string, italicWord: string): {
+  pre: string;
+  italic: string;
+  post: string;
+} {
+  const idx = full.indexOf(italicWord);
+  if (idx === -1) return { pre: full, italic: "", post: "" };
+  return {
+    pre: full.slice(0, idx),
+    italic: italicWord,
+    post: full.slice(idx + italicWord.length),
+  };
+}
+---
+
+<section class="section section--warm">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <Eyebrow text={t("section.philosophy")} />
+        <h2>
+          {headCopy.title[0]}<em>{headCopy.title[1]}</em>{headCopy.title[2]}
+        </h2>
+      </div>
+      <p>{headCopy.lead}</p>
+    </div>
+
+    <div class="philosophy-grid">
+      {
+        philosophy.map((card) => {
+          const parts = splitTitle(card.title[lang], card.italicWord[lang]);
+          return (
+            <article class="philosophy-card">
+              <p class="eyebrow">{card.eyebrow[lang]}</p>
+              <h3>
+                {parts.pre}
+                <em>{parts.italic}</em>
+                {parts.post}
+              </h3>
+              <p>{card.body[lang]}</p>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

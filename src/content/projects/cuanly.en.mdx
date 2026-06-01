@@ -1,0 +1,45 @@
+---
+title: "Cuanly — Digital Account Marketplace"
+slug: "cuanly"
+lang: "en"
+year: 2026
+role: "Solo Engineer — Full Stack"
+stack:
+  - "Next.js 16"
+  - "React 19"
+  - "TypeScript"
+  - "Tailwind v4"
+  - "Prisma"
+  - "PostgreSQL"
+summary: "A digital premium-account marketplace with a database-backed store-owner CMS. The owner manages the product catalog, pages, and settings from one panel — changes appear instantly to every visitor, not just in one browser."
+coverAlt: "Cuanly marketplace homepage with a dark theme and product catalog"
+pubDate: 2026-05-25
+featured: false
+confidential: false
+status: "Active"
+links:
+  caseStudy: true
+---
+
+Many storefronts look dynamic but actually hardcode their content — changing a price or adding a product means editing code and redeploying. Cuanly was built on the opposite assumption: the store owner should be able to manage their entire storefront themselves, without touching code.
+
+## What I built
+
+A marketplace for digital premium accounts (AI tools, streaming, music, productivity) with two clearly separated sides:
+
+- **Visitor storefront** — landing, database-driven product catalog, SEO blog, categories, customer dashboard
+- **Owner CMS panel** — manage products, custom pages, and store settings; all stored in the database and shown live
+
+On top of that sit 80+ free tools (business and finance calculators) and support pages for a B2B audience.
+
+## Technical decisions
+
+**A genuinely database-backed CMS.** Every owner change — price, description, a new page — is stored in PostgreSQL via Prisma and shown instantly to every visitor. Not per-browser configuration, not static files needing a redeploy.
+
+**Role-separated authentication.** Owners and customers have different login paths and permissions, guarded with JWT (jose) and password hashing (bcrypt).
+
+**SEO-scale content.** The catalog and blog structure is designed for many indexed pages — categories, articles, and products each with their own URL.
+
+## Outcome
+
+The marketplace runs with hundreds of generated pages, powered by a catalog and CMS fully managed by the owner from the database — a foundation that can be operated without developer involvement for day-to-day work.

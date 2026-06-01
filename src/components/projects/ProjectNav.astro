@@ -1,0 +1,43 @@
+---
+// src/components/projects/ProjectNav.astro
+// Prev/next pagination antar project. Maintain locale.
+import { ArrowLeft, ArrowRight } from "lucide-astro";
+import type { CollectionEntry } from "astro:content";
+import { getLangFromUrl } from "@i18n/utils";
+
+interface Props {
+  prev: CollectionEntry<"projects"> | null;
+  next: CollectionEntry<"projects"> | null;
+}
+
+const { prev, next } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+
+const baseHref = lang === "id" ? "/karya" : "/en/work";
+
+const labels = lang === "id"
+  ? { prev: "Sebelumnya", next: "Berikutnya" }
+  : { prev: "Previous", next: "Next" };
+---
+
+<nav class="project-nav" aria-label="Project pagination">
+  {prev ? (
+    <a href={`${baseHref}/${prev.data.slug}`} class="project-nav-link is-prev">
+      <ArrowLeft size={16} strokeWidth={1.5} aria-hidden="true" />
+      <span class="project-nav-direction">{labels.prev}</span>
+      <span class="project-nav-title">{prev.data.title}</span>
+    </a>
+  ) : (
+    <span class="project-nav-link is-empty" aria-hidden="true"></span>
+  )}
+
+  {next ? (
+    <a href={`${baseHref}/${next.data.slug}`} class="project-nav-link is-next">
+      <span class="project-nav-direction">{labels.next}</span>
+      <span class="project-nav-title">{next.data.title}</span>
+      <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
+    </a>
+  ) : (
+    <span class="project-nav-link is-empty" aria-hidden="true"></span>
+  )}
+</nav>

@@ -1,0 +1,48 @@
+---
+title: "ToolKita Mobile — Offline Document Tools"
+slug: "toolkita-mobile"
+lang: "en"
+year: 2026
+role: "Solo Engineer — Mobile"
+stack:
+  - "Expo SDK 56"
+  - "React Native 0.85"
+  - "TypeScript"
+  - "NativeWind"
+  - "ML Kit"
+  - "pdf-lib"
+  - "ed25519"
+summary: "ToolKita's companion mobile app — 12 document tools that all run locally, no upload. Document scanning, PDF merge/split, OCR, signing, QR. Shares the ed25519 licensing system with the web version through offline verification."
+coverAlt: "ToolKita Mobile app screen with a list of document tools"
+pubDate: 2026-05-28
+featured: true
+confidential: false
+status: "Active"
+links:
+  github: "https://github.com/dikareza96/toolkita-mobile"
+  caseStudy: true
+---
+
+ToolKita on the web handles a lot, but administrative work often happens away from a desk: staff photographing documents in the field, nurses scanning files on the ward. That needs a phone app — with the same privacy guarantee.
+
+## What I built
+
+An Android app (Expo) with 12 document tools commonly used in hospitals, government offices, and schools:
+
+- **Document Scan** — photograph a document, auto-crop, output a clean PDF (ML Kit)
+- **PDF Merge & Split** — manage pages without a desktop app
+- **OCR** — read text from scans, on-device
+- **Signature** — draw a signature with your finger, stamp it onto a PDF
+- **QR Code, compress, watermark, Bates numbering** — archival and accreditation needs
+
+## Technical decisions
+
+**100% offline for core processing.** No outbound network calls except user-initiated ones (share, save) or account sync. PDF manipulation uses pdf-lib (pure JavaScript), scanning and OCR use on-device ML Kit. Documents are never sent to a server.
+
+**The same licensing as the web.** Activation codes signed with ed25519 on the web side can be verified on the phone without a connection — the public key is baked into the app. One purchase, valid on both web and mobile.
+
+**Dependency discipline.** Every library's license is checked before installation — only MIT, Apache, BSD, ISC, OFL. Restrictively licensed libraries are rejected because the government and hospital audience undergoes audits.
+
+## Outcome
+
+The app runs with 97 automated tests. Because Expo SDK 56 and React Native 0.85 are still new, much of the work was stabilizing the native build (pinning Gradle, JVM target) — findings documented so the build can be reproduced reliably.

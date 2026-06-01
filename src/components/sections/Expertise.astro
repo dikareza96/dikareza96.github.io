@@ -1,0 +1,54 @@
+---
+// src/components/sections/Expertise.astro
+// Tech stack tabular (5 row dari LinkedIn).
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { expertise } from "@data/expertise";
+import Eyebrow from "@components/ui/Eyebrow.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const headCopy = {
+  id: {
+    title: ["Stack seimbang yang berpusat pada arsitektur yang ", "kokoh", "."],
+    lead: "Sistem yang bisa dirawat, pengalaman yang performant.",
+    cols: { idx: "#", cat: "Kategori", tech: "Teknologi" },
+  },
+  en: {
+    title: ["A balanced stack focused on ", "robust", " architecture."],
+    lead: "Maintainable systems, performant user experiences.",
+    cols: { idx: "#", cat: "Category", tech: "Technologies" },
+  },
+}[lang];
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <Eyebrow text={t("section.expertise")} />
+        <h2>
+          {headCopy.title[0]}<em>{headCopy.title[1]}</em>{headCopy.title[2]}
+        </h2>
+      </div>
+      <p>{headCopy.lead}</p>
+    </div>
+
+    <div class="expertise-table">
+      <div class="expertise-row is-header">
+        <span class="expertise-index">{headCopy.cols.idx}</span>
+        <span class="expertise-category">{headCopy.cols.cat}</span>
+        <span class="expertise-tech">{headCopy.cols.tech}</span>
+      </div>
+      {
+        expertise.map((row) => (
+          <div class="expertise-row">
+            <span class="expertise-index">{row.index}</span>
+            <span class="expertise-category">{row.category[lang]}</span>
+            <span class="expertise-tech">{row.technologies}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

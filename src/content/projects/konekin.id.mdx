@@ -1,0 +1,47 @@
+---
+title: "Konekin — Manajemen WiFi Reseller"
+slug: "konekin"
+lang: "id"
+year: 2026
+role: "Solo Engineer — Backend & Sistem"
+stack:
+  - "Python"
+  - "FastAPI"
+  - "SQLite"
+  - "RADIUS"
+  - "Webhook HMAC"
+  - "Vanilla JS"
+summary: "Platform untuk pebisnis RT-RW Net — yang beli satu koneksi ISP lalu jual ulang ke tetangga. Tagihan bulanan otomatis, putus-sambung internet berdasar status bayar, dan pembayaran yang menyambungkan kembali sendiri lewat webhook."
+coverAlt: "Dashboard reseller Konekin dengan tabel pelanggan dan status koneksi"
+pubDate: 2026-05-15
+featured: false
+confidential: false
+status: "Active"
+links:
+  github: "https://github.com/dikareza96/konekin"
+  caseStudy: true
+---
+
+Bisnis RT-RW Net itu sederhana di permukaan: beli satu langganan internet, bagi ke tetangga, tagih bulanan. Yang melelahkan adalah operasionalnya — mengingat siapa belum bayar, memutus yang nunggak, menyambung lagi setelah bayar. Konekin mengotomasi seluruh siklus itu.
+
+## Yang dibangun
+
+Platform multi-tenant (satu reseller = satu tenant, data terisolasi) yang menangani:
+
+- **Tagihan otomatis** — terbit bulanan, dengan reminder H-3, hari-H, dan H+1
+- **Auto-isolir** — internet pelanggan terputus sendiri saat menunggak, tersambung lagi setelah bayar
+- **Pembayaran yang menyambung sendiri** — QRIS/transfer memicu webhook yang langsung mengaktifkan koneksi
+- **Laporan keuangan** — pemasukan, tunggakan, pelanggan aktif
+- **Langganan SaaS bertingkat** — gratis/basic/pro dengan batas yang ditegakkan server-side
+
+## Keputusan teknis
+
+**Auth dan isolir lewat RADIUS terpusat.** Router pelanggan dial keluar ke server RADIUS — accept atau reject berdasar status bayar, dan sesi online bisa ditendang lewat CoA (Change of Authorization). Aman di belakang NAT karena koneksi dimulai dari sisi pelanggan.
+
+**Tier yang ditegakkan, bukan sekadar label.** Karena Konekin punya backend, batas tier (jumlah pelanggan, paket) dicek dan dicabut real-time di server — beda dengan lisensi offline yang sekali ditandatangani sulit dicabut.
+
+**Diverifikasi end-to-end, bukan diklaim.** Setiap bagian diuji lewat HTTP nyata: slice vertikal router→RADIUS→API→DB, simulasi sebulan penuh (tagihan, reminder, isolir, reconnect berjalan idempoten), dan webhook ber-HMAC.
+
+## Hasil
+
+Slice vertikal terbukti jalan sebagai full software tanpa hardware — 6 suite test hijau lewat satu perintah verifikasi. Fondasi yang siap dilanjutkan dengan FreeRADIUS dan payment gateway nyata.

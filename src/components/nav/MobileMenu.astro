@@ -1,0 +1,39 @@
+---
+// src/components/nav/MobileMenu.astro
+// Full-screen overlay menu (mobile only). Body class .menu-open toggles visibility.
+import { getLangFromUrl, getLocaleHref } from "@i18n/utils";
+import { profile } from "@data/profile";
+
+const lang = getLangFromUrl(Astro.url);
+
+const homeHref = lang === "id" ? "/" : "/en";
+const workHref = lang === "id" ? "/karya" : "/en/work";
+const contactHref = `mailto:${profile.email}`;
+const altLang = lang === "id" ? "en" : "id";
+const switchHref = getLocaleHref(altLang, Astro.url.pathname);
+---
+
+<aside id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <ul>
+    <li>
+      <a href={homeHref}>
+        {lang === "id" ? <>Profil <em>saya</em></> : <>About <em>me</em></>}
+      </a>
+    </li>
+    <li>
+      <a href={workHref}>
+        {lang === "id" ? <>Karya <em>terpilih</em></> : <>Selected <em>work</em></>}
+      </a>
+    </li>
+    <li>
+      <a href={contactHref}>
+        {lang === "id" ? <>Mari <em>bicara</em></> : <>Let's <em>talk</em></>}
+      </a>
+    </li>
+    <li>
+      <a href={switchHref} hreflang={altLang}>
+        {altLang.toUpperCase()} <em>{lang === "id" ? "version" : "versi"}</em>
+      </a>
+    </li>
+  </ul>
+</aside>

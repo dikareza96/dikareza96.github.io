@@ -1,0 +1,12 @@
+---
+// src/components/ui/Eyebrow.astro
+// Section eyebrow caption: mono uppercase + sage dot + tracking.
+interface Props {
+  text: string;
+  class?: string;
+}
+
+const { text, class: className = "" } = Astro.props;
+---
+
+<p class:list={["eyebrow", className]}>{text}</p>

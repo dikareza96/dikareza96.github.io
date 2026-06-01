@@ -1,0 +1,31 @@
+---
+// src/pages/en/work/index.astro
+// Projects list (English mirror).
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getProjectsForLang } from "@i18n/utils";
+import { profile } from "@data/profile";
+import Eyebrow from "@components/ui/Eyebrow.astro";
+import ProjectsList from "@components/projects/ProjectsList.astro";
+
+const projects = await getProjectsForLang("en");
+
+const title = `Work — ${profile.name.en} | ${profile.studio}`;
+const description =
+  "Selected work: hospital information systems, PACS integration, and stack modernization from legacy PHP to Bun/Hono/TypeScript.";
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="container projects-page-head">
+    <Eyebrow text="02 — Selected work" />
+    <h1>Work explored with <em>patience</em>.</h1>
+    <p class="lead">
+      A selection from the past few years. Each project is an exploration of
+      real clinical workflows — not a technical exercise to showcase a stack.
+      Some are internal hospital systems with no public links.
+    </p>
+  </header>
+
+  <section class="container">
+    <ProjectsList projects={projects} />
+  </section>
+</BaseLayout>

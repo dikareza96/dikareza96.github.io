@@ -1,0 +1,57 @@
+---
+// src/pages/karya/[slug].astro
+// Detail page (Indonesian) — dynamic route per project slug.
+import { getCollection, render } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { profile } from "@data/profile";
+import { getAdjacentProjects } from "@i18n/utils";
+import ProjectHero from "@components/projects/ProjectHero.astro";
+import ProjectMeta from "@components/projects/ProjectMeta.astro";
+import ProjectNav from "@components/projects/ProjectNav.astro";
+import ContactCTA from "@components/sections/ContactCTA.astro";
+
+export async function getStaticPaths() {
+  const all = await getCollection("projects", (p) => p.data.lang === "id");
+  return all.map((project) => ({
+    params: { slug: project.data.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const { index, total, prev, next } = await getAdjacentProjects(
+  project.data.slug,
+  "id"
+);
+
+const title = `${project.data.title} — Karya | ${profile.studio}`;
+const description = project.data.summary;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="container">
+    <ProjectHero project={project} index={index} total={total} />
+
+    <ProjectMeta project={project} />
+
+    <ul class="project-detail-stack">
+      {project.data.stack.map((tech, i) => (
+        <li>
+          <span class="project-stack-index">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <span class="project-stack-tech">{tech}</span>
+        </li>
+      ))}
+    </ul>
+
+    <div class="project-detail-body">
+      <Content />
+    </div>
+
+    <ProjectNav prev={prev} next={next} />
+  </article>
+
+  <ContactCTA />
+</BaseLayout>

@@ -1,0 +1,52 @@
+---
+title: "ToolKita — Tools Dokumen Online"
+slug: "toolkita-web"
+lang: "id"
+year: 2026
+role: "Solo Engineer — Desain, Frontend, Backend"
+stack:
+  - "Next.js 16"
+  - "React 19"
+  - "TypeScript"
+  - "Tailwind v4"
+  - "PostgreSQL"
+  - "pdf-lib"
+  - "ed25519"
+summary: "Kumpulan 32+ tools dokumen harian untuk instansi Indonesia — PDF, gambar, QR, invoice, OCR. Mayoritas diproses di browser, jadi dokumen sensitif tidak pernah meninggalkan perangkat. Lengkap dengan akun, langganan, dan panel admin."
+coverAlt: "Halaman utama ToolKita dengan grid tools dokumen"
+pubDate: 2026-05-31
+featured: true
+confidential: false
+status: "Production"
+links:
+  live: "https://toolkita.id"
+  github: "https://github.com/dikareza96/toolkita"
+  caseStudy: true
+---
+
+Pekerjaan administrasi di rumah sakit, instansi pemerintah, dan sekolah masih banyak berkutat di dokumen: gabung PDF, kompres berkas yang kebesaran, tambah watermark, baca teks dari hasil scan. Tools yang beredar mengharuskan upload ke server orang lain — masalah serius untuk dokumen yang memuat data pasien atau berkas internal.
+
+## Yang dibangun
+
+ToolKita menyatukan 32+ tool dokumen dalam satu situs. Yang membedakan: mayoritas tool berjalan di browser. File diproses di perangkat pengguna, bukan dikirim ke server. Untuk audiens pemerintah dan rumah sakit, ini bukan fitur tambahan — ini syarat.
+
+Di atas inti tool gratis, ada lapisan produk lengkap:
+
+- **Akun pengguna** — registrasi, login, profil, reset password
+- **Langganan berjenjang** — Free, Pro, Business, dengan batas yang ditegakkan di server
+- **Pembayaran** — checkout transfer manual dengan verifikasi admin
+- **Lisensi ed25519** — kode aktivasi yang ditandatangani secara kriptografis, bisa diverifikasi offline oleh aplikasi mobile
+- **Panel admin** — kelola order, pengguna, lisensi, promo, dan log audit
+- **Halaman legal** — privasi, syarat, kontak untuk kepatuhan audiens pemerintah
+
+## Keputusan teknis
+
+**Pemrosesan di sisi klien sebagai default.** Manipulasi PDF memakai pdf-lib (JavaScript murni, tanpa dependensi native), render gambar lewat canvas. Server hanya disentuh saat benar-benar perlu: autentikasi, pembayaran, dan sinkronisasi lisensi.
+
+**Lisensi yang bisa diverifikasi offline.** Kode aktivasi ditandatangani dengan ed25519 di sisi web. Kunci publik ditanam di aplikasi mobile, sehingga verifikasi berjalan tanpa koneksi ke server — penting untuk perangkat di lingkungan dengan jaringan terbatas.
+
+**Dibangun untuk diaudit.** Stack dependensi dijaga ketat — hanya lisensi MIT, Apache, BSD, ISC. Setiap aksi admin tercatat di log audit. Pilihan ini diambil sejak awal karena audiens utamanya instansi yang menjalani proses audit.
+
+## Hasil
+
+ToolKita berjalan di produksi di [toolkita.id](https://toolkita.id) dengan 285 test otomatis menjaga inti tool dan alur commerce. Aplikasi mobile pendampingnya (Expo, 12 tool offline) berbagi sistem lisensi yang sama lewat verifikasi kunci publik.

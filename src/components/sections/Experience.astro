@@ -1,0 +1,57 @@
+---
+// src/components/sections/Experience.astro
+// Career timeline 4 role asymmetric grid.
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { experience } from "@data/experience";
+import Eyebrow from "@components/ui/Eyebrow.astro";
+import YearPill from "@components/ui/YearPill.astro";
+import Chip from "@components/ui/Chip.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const headCopy = {
+  id: {
+    title: ["Pengalaman ", "profesional", "."],
+    lead: "Peran-peran yang membentuk filosofi teknis dan pendekatan engineering. Fokus pada lingkungan yang menghargai kualitas di atas kecepatan.",
+  },
+  en: {
+    title: ["Professional ", "history", "."],
+    lead: "Curated roles that shaped my technical philosophy and engineering approach. Focusing on environments that value quality over velocity.",
+  },
+}[lang];
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <Eyebrow text={t("section.history")} />
+        <h2>
+          {headCopy.title[0]}<em>{headCopy.title[1]}</em>{headCopy.title[2]}
+        </h2>
+      </div>
+      <p>{headCopy.lead}</p>
+    </div>
+
+    <div class="experience-grid">
+      {
+        experience.map((item) => (
+          <article class="experience-item">
+            <div>
+              <div class="experience-top">
+                <h3 class="experience-role">{item.role[lang]}</h3>
+                <YearPill text={item.period[lang]} />
+              </div>
+              <p class="experience-company">{item.company}</p>
+              <p class="experience-body">{item.body[lang]}</p>
+            </div>
+            <div class="experience-tags">
+              {item.tags.map((tag) => <Chip>{tag}</Chip>)}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

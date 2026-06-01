@@ -1,0 +1,45 @@
+---
+title: "Cuanly — Marketplace Akun Digital"
+slug: "cuanly"
+lang: "id"
+year: 2026
+role: "Solo Engineer — Full Stack"
+stack:
+  - "Next.js 16"
+  - "React 19"
+  - "TypeScript"
+  - "Tailwind v4"
+  - "Prisma"
+  - "PostgreSQL"
+summary: "Marketplace akun premium digital dengan CMS pemilik toko berbasis database. Owner mengelola katalog produk, halaman, dan pengaturan dari satu panel — perubahan langsung tampil ke semua pengunjung, bukan cuma di satu browser."
+coverAlt: "Halaman utama marketplace Cuanly dengan tema gelap dan katalog produk"
+pubDate: 2026-05-25
+featured: false
+confidential: false
+status: "Active"
+links:
+  caseStudy: true
+---
+
+Banyak situs jualan kelihatan dinamis tapi sebenarnya kontennya di-hardcode — mau ganti harga atau tambah produk harus ubah kode dan deploy ulang. Cuanly dibangun dengan asumsi sebaliknya: pemilik toko harus bisa mengelola seluruh etalasenya sendiri, tanpa menyentuh kode.
+
+## Yang dibangun
+
+Marketplace untuk akun premium digital (AI tools, streaming, musik, produktivitas) dengan dua sisi yang jelas terpisah:
+
+- **Etalase pengunjung** — landing, katalog produk dari database, blog SEO, kategori, dashboard pelanggan
+- **Panel CMS owner** — kelola produk, halaman custom, dan pengaturan toko; semuanya tersimpan di database dan langsung tampil
+
+Di atasnya ada 80+ tool gratis (kalkulator bisnis dan finance) dan halaman support untuk audiens B2B.
+
+## Keputusan teknis
+
+**CMS yang benar-benar ber-database.** Setiap perubahan owner — harga, deskripsi, halaman baru — disimpan di PostgreSQL lewat Prisma dan langsung tampil ke semua pengunjung. Bukan konfigurasi per-browser, bukan file statis yang perlu deploy ulang.
+
+**Autentikasi terpisah peran.** Owner dan pelanggan punya jalur login dan kewenangan berbeda, dijaga dengan JWT (jose) dan password hashing (bcrypt).
+
+**Konten berskala SEO.** Struktur katalog dan blog dirancang untuk banyak halaman terindeks — kategori, artikel, dan produk yang masing-masing punya URL sendiri.
+
+## Hasil
+
+Marketplace berjalan dengan ratusan halaman ter-generate, ditenagai katalog dan CMS yang sepenuhnya dikelola owner dari database — fondasi yang bisa dioperasikan tanpa keterlibatan developer untuk operasi harian.

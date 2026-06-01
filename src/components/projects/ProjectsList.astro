@@ -1,0 +1,30 @@
+---
+// src/components/projects/ProjectsList.astro
+// Zigzag list of project cards. Alternates direction (left/right) per item.
+import type { CollectionEntry } from "astro:content";
+import ProjectCard from "@components/projects/ProjectCard.astro";
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+}
+
+const { projects } = Astro.props;
+---
+
+<div class="projects-list">
+  {
+    projects.map((project, index) => (
+      <>
+        <ProjectCard
+          project={project}
+          index={index}
+          total={projects.length}
+          reverse={index % 2 === 1}
+        />
+        {index < projects.length - 1 && (
+          <hr class="projects-divider" aria-hidden="true" />
+        )}
+      </>
+    ))
+  }
+</div>

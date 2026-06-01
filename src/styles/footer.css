@@ -1,0 +1,130 @@
+/* ============================================================================
+   footer.css — Footer grid + big wordmark + bottom row
+   Drop-in dari design-foundation.md §10.15
+   ============================================================================ */
+
+.footer {
+  padding: 4rem 0 2.5rem;
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+  position: relative;
+  z-index: 1;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.footer-brand h3 {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+.footer-brand p {
+  margin-top: 0.75rem;
+  color: var(--ink-muted);
+  max-width: 34ch;
+  font-size: 0.9rem;
+}
+
+.footer-col h4 {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--ink-muted);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.footer-col a {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  transition: color 350ms var(--spring);
+}
+
+.footer-col a:hover {
+  color: var(--ink);
+}
+
+/* Big wordmark */
+.footer-mark {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 18vw, 14rem);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+  text-align: center;
+  margin: 3rem 0 1.5rem;
+  font-weight: 300;
+}
+
+.footer-mark em {
+  font-family: var(--font-italic);
+  font-style: italic;
+  color: var(--sage);
+  font-weight: 400;
+}
+
+.footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+}
+
+.footer-bottom-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer-bottom a {
+  color: var(--ink-muted);
+  transition: color 350ms var(--spring);
+}
+
+.footer-bottom a:hover {
+  color: var(--ink);
+}
+
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lang-switcher span {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.lang-switcher a {
+  color: var(--ink-muted);
+}

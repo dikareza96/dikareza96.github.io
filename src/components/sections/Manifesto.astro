@@ -1,0 +1,62 @@
+---
+// src/components/sections/Manifesto.astro
+// Pull quote besar dengan italic-swap + cite pill.
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { profile } from "@data/profile";
+import Eyebrow from "@components/ui/Eyebrow.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const copy = {
+  id: {
+    quotePre: "Di rumah sakit, perangkat lunak tidak boleh sekadar ",
+    italic: "pintar",
+    quotePost:
+      " — ia harus andal. Sistem terbaik adalah yang tidak disadari keberadaannya, karena tidak pernah menghalangi pekerjaan klinis.",
+    citeRole: "Senior Software Engineer · RS Bhayangkara Kediri",
+  },
+  en: {
+    quotePre: "In a hospital, software doesn't get to be ",
+    italic: "clever",
+    quotePost:
+      " — it has to be reliable. The best system is the one no one notices because it never gets in the way of care.",
+    citeRole: "Senior Software Engineer · RS Bhayangkara Kediri",
+  },
+}[lang];
+---
+
+<section class="manifesto">
+  <div class="container">
+    <Eyebrow text={t("section.manifesto")} class="manifesto-eyebrow" />
+
+    <div class="manifesto-inner">
+      <blockquote>
+        {copy.quotePre}<em>{copy.italic}</em>{copy.quotePost}
+      </blockquote>
+
+      <span class="manifesto-cite">
+        <span class="manifesto-cite-avatar" aria-hidden="true">D</span>
+        <span>
+          <strong>{profile.name[lang]}</strong>
+          <span class="manifesto-cite-role"> · {copy.citeRole}</span>
+        </span>
+      </span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .manifesto-eyebrow {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+  .manifesto-cite strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .manifesto-cite-role {
+    color: var(--ink-muted);
+  }
+</style>

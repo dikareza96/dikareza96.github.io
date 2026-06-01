@@ -1,0 +1,26 @@
+---
+// src/pages/index.astro — Profile (default ID locale)
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { profile } from "@data/profile";
+import Hero from "@components/hero/Hero.astro";
+import MarkerBar from "@components/sections/MarkerBar.astro";
+import Expertise from "@components/sections/Expertise.astro";
+import Experience from "@components/sections/Experience.astro";
+import Philosophy from "@components/sections/Philosophy.astro";
+import Manifesto from "@components/sections/Manifesto.astro";
+import ContactCTA from "@components/sections/ContactCTA.astro";
+
+const title = `${profile.name.id} — ${profile.role.id} | ${profile.studio}`;
+const description =
+  "Saya membangun sistem informasi rumah sakit dan rekam medis elektronik yang diandalkan tim klinis setiap hari. Tujuh tahun lintas-stack — PHP legacy, Bun/Hono/TypeScript modern.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Hero />
+  <MarkerBar />
+  <Expertise />
+  <Experience />
+  <Philosophy />
+  <Manifesto />
+  <ContactCTA />
+</BaseLayout>

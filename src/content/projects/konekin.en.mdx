@@ -1,0 +1,47 @@
+---
+title: "Konekin — WiFi Reseller Management"
+slug: "konekin"
+lang: "en"
+year: 2026
+role: "Solo Engineer — Backend & Systems"
+stack:
+  - "Python"
+  - "FastAPI"
+  - "SQLite"
+  - "RADIUS"
+  - "Webhook HMAC"
+  - "Vanilla JS"
+summary: "A platform for RT-RW Net operators — people who buy one ISP connection and resell it to their neighbors. Automated monthly billing, internet cut-off based on payment status, and payments that reconnect service on their own via webhook."
+coverAlt: "Konekin reseller dashboard with a customer table and connection statuses"
+pubDate: 2026-05-15
+featured: false
+confidential: false
+status: "Active"
+links:
+  github: "https://github.com/dikareza96/konekin"
+  caseStudy: true
+---
+
+The RT-RW Net business is simple on the surface: buy one internet subscription, share it with neighbors, bill monthly. The exhausting part is the operations — remembering who hasn't paid, cutting off the delinquent, reconnecting after payment. Konekin automates that entire cycle.
+
+## What I built
+
+A multi-tenant platform (one reseller = one tenant, data isolated) that handles:
+
+- **Automated billing** — issued monthly, with reminders at D-3, the due date, and D+1
+- **Auto-isolation** — a customer's internet cuts off on its own when overdue, reconnects after payment
+- **Self-reconnecting payments** — QRIS/transfer triggers a webhook that immediately reactivates the connection
+- **Financial reports** — income, arrears, active customers
+- **Tiered SaaS subscriptions** — free/basic/pro with server-side enforced limits
+
+## Technical decisions
+
+**Auth and isolation via centralized RADIUS.** The customer's router dials out to a RADIUS server — accept or reject based on payment status, and online sessions can be kicked via CoA (Change of Authorization). Safe behind NAT because the connection originates from the customer side.
+
+**Enforced tiers, not just labels.** Because Konekin has a backend, tier limits (customer count, packages) are checked and revoked in real time on the server — unlike an offline license that, once signed, is hard to revoke.
+
+**Verified end-to-end, not claimed.** Every part is tested over real HTTP: the vertical slice router→RADIUS→API→DB, a full month-long simulation (billing, reminders, isolation, reconnect running idempotently), and HMAC-signed webhooks.
+
+## Outcome
+
+The vertical slice is proven to work as full software without hardware — 6 test suites green through a single verification command. A foundation ready to continue with real FreeRADIUS and a payment gateway.

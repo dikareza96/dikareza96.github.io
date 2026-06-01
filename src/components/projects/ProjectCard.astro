@@ -1,0 +1,106 @@
+---
+// src/components/projects/ProjectCard.astro
+// Single project card with zigzag layout — image + text column.
+// Layout direction toggles berdasarkan `reverse` prop untuk alternating zigzag.
+import { ArrowRight } from "lucide-astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  index: number;
+  total: number;
+  reverse?: boolean;
+}
+
+const { project, index, total, reverse = false } = Astro.props;
+const { data } = project;
+
+// Format counter "01 / 04"
+const counter = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+
+// Status pill color (mostly use ink-muted, only 'Active' gets sage emphasis)
+const statusActive = data.status === "Active";
+---
+
+<article class:list={["project-card", { "is-reverse": reverse }]}>
+  <div class="project-card-visual">
+    <div class="project-card-image-wrap">
+      {/* Placeholder gradient sebagai background fallback */}
+      <div
+        class:list={["project-card-placeholder", `placeholder-${(index % 3) + 1}`]}
+        aria-hidden="true"
+      >
+      </div>
+      {/* Cover screenshot asli, di atas placeholder */}
+      <img
+        src={`/covers/${data.slug}.png`}
+        alt={data.coverAlt}
+        class="project-card-cover-img"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </div>
+
+  <div class="project-card-content">
+    <div class="project-card-meta">
+      <span class="project-counter">{counter}</span>
+      {data.confidential && (
+        <span class="project-confidential" title="Internal hospital system, no public links">
+          Confidential
+        </span>
+      )}
+      <span class:list={["project-status", { "is-active": statusActive }]}>
+        {data.status}
+      </span>
+    </div>
+
+    <h2 class="project-card-title">{data.title}</h2>
+
+    <p class="project-card-summary">{data.summary}</p>
+
+    <div class="project-card-stack">
+      <ul>
+        {
+          data.stack.map((tech, i) => (
+            <li>
+              <span class="project-stack-index">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span class="project-stack-tech">{tech}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="project-card-links">
+      {data.links.live && (
+        <a
+          href={data.links.live}
+          class="project-link"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Live Demo
+        </a>
+      )}
+      {data.links.github && (
+        <a
+          href={data.links.github}
+          class="project-link with-arrow"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          GitHub
+          <ArrowRight size={14} strokeWidth={1.5} aria-hidden="true" />
+        </a>
+      )}
+      {data.confidential && !data.links.live && !data.links.github && (
+        <span class="project-link-note">
+          Internal system — no public access
+        </span>
+      )}
+    </div>
+  </div>
+</article>

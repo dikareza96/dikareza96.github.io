@@ -1,0 +1,44 @@
+---
+// src/components/ui/Button.astro
+// Pill button — primer (ink), ghost (outline), or icon variant.
+import { ArrowUpRight } from "lucide-astro";
+
+interface Props {
+  href?: string;
+  variant?: "primary" | "ghost" | "icon" | "nav";
+  withArrow?: boolean;
+  ariaLabel?: string;
+  class?: string;
+}
+
+const {
+  href,
+  variant = "primary",
+  withArrow = false,
+  ariaLabel,
+  class: className = "",
+} = Astro.props;
+
+const classes = [
+  "btn",
+  variant === "ghost" && "btn-ghost",
+  variant === "icon" && "btn-icon",
+  variant === "nav" && "btn-nav",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag class={classes} href={href} aria-label={ariaLabel}>
+  <slot />
+  {
+    withArrow && variant !== "icon" && (
+      <span class="btn-arrow" aria-hidden="true">
+        <ArrowUpRight size={14} strokeWidth={1.5} />
+      </span>
+    )
+  }
+</Tag>

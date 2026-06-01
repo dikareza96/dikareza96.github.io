@@ -1,0 +1,95 @@
+/* ============================================================================
+   bento.css — Bento grid for Phase 2 projects (12-col tile system)
+   Drop-in dari design-foundation.md §10.12
+   Loaded but unused di Phase 1, ready saat Phase 2 mulai.
+   ============================================================================ */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 180px;
+  gap: 1.25rem;
+}
+
+.tile {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  transition:
+    transform var(--dur-medium) var(--spring),
+    box-shadow var(--dur-medium) var(--spring);
+}
+
+.tile:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover-tile);
+}
+
+.tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slower) var(--ease-out);
+  filter: saturate(0.92);
+}
+
+.tile:hover img {
+  transform: scale(1.045);
+}
+
+.tile-tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: rgba(27, 24, 20, 0.85);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(8px);
+}
+
+.tile-caption {
+  position: absolute;
+  left: 1.25rem;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  padding: 0.85rem 1rem;
+  background: rgba(244, 239, 230, 0.92);
+  border: 1px solid var(--rule);
+  border-radius: 0.9rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tile--feature { grid-column: span 7; grid-row: span 3; }
+.tile--tall    { grid-column: span 5; grid-row: span 3; }
+.tile--wide    { grid-column: span 7; grid-row: span 2; }
+.tile--small   { grid-column: span 5; grid-row: span 2; }
+
+@media (max-width: 768px) {
+  .bento {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+  .tile {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    aspect-ratio: 4 / 5;
+  }
+  .tile--feature,
+  .tile--wide {
+    aspect-ratio: 3 / 4;
+  }
+}

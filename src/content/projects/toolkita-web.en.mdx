@@ -1,0 +1,52 @@
+---
+title: "ToolKita — Online Document Tools"
+slug: "toolkita-web"
+lang: "en"
+year: 2026
+role: "Solo Engineer — Design, Frontend, Backend"
+stack:
+  - "Next.js 16"
+  - "React 19"
+  - "TypeScript"
+  - "Tailwind v4"
+  - "PostgreSQL"
+  - "pdf-lib"
+  - "ed25519"
+summary: "A suite of 32+ everyday document tools for Indonesian institutions — PDF, image, QR, invoice, OCR. Most run in the browser, so sensitive documents never leave the device. Complete with accounts, subscriptions, and an admin panel."
+coverAlt: "ToolKita homepage with a grid of document tools"
+pubDate: 2026-05-31
+featured: true
+confidential: false
+status: "Production"
+links:
+  live: "https://toolkita.id"
+  github: "https://github.com/dikareza96/toolkita"
+  caseStudy: true
+---
+
+Administrative work in hospitals, government offices, and schools still revolves around documents: merging PDFs, compressing oversized files, adding watermarks, reading text from scans. The tools available online require uploading to someone else's server — a serious problem for documents holding patient data or internal records.
+
+## What I built
+
+ToolKita brings 32+ document tools together on a single site. The differentiator: most tools run in the browser. Files are processed on the user's device, not sent to a server. For a government and hospital audience, this isn't a nice-to-have — it's a requirement.
+
+On top of the free tool core sits a full product layer:
+
+- **User accounts** — registration, login, profile, password reset
+- **Tiered subscriptions** — Free, Pro, Business, with limits enforced server-side
+- **Payments** — manual bank-transfer checkout with admin verification
+- **ed25519 licensing** — cryptographically signed activation codes, verifiable offline by the mobile app
+- **Admin panel** — manage orders, users, licenses, promos, and an audit log
+- **Legal pages** — privacy, terms, contact for government-audience compliance
+
+## Technical decisions
+
+**Client-side processing by default.** PDF manipulation uses pdf-lib (pure JavaScript, no native dependencies), image rendering goes through canvas. The server is touched only when genuinely necessary: authentication, payments, and license sync.
+
+**Offline-verifiable licensing.** Activation codes are signed with ed25519 on the web side. The public key is baked into the mobile app, so verification runs without a server connection — important for devices in network-constrained environments.
+
+**Built to be audited.** The dependency stack is kept strict — only MIT, Apache, BSD, ISC licenses. Every admin action is recorded in an audit log. These choices were made early because the primary audience is institutions that undergo audit processes.
+
+## Outcome
+
+ToolKita runs in production at [toolkita.id](https://toolkita.id), with 285 automated tests guarding the tool core and commerce flows. Its companion mobile app (Expo, 12 offline tools) shares the same licensing system through public-key verification.

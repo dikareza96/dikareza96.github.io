@@ -1,0 +1,11 @@
+---
+// src/components/ui/YearPill.astro
+// Decorative non-interactive year/period label.
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<span class="year-pill" aria-hidden="false">{text}</span>

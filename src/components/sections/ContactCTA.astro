@@ -1,0 +1,53 @@
+---
+// src/components/sections/ContactCTA.astro
+// Dark inverse block dengan mailto link besar.
+import { ArrowUpRight } from "lucide-astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { profile } from "@data/profile";
+import Eyebrow from "@components/ui/Eyebrow.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const copy = {
+  id: {
+    h2Pre: "Mari ",
+    italic: "bicara",
+    h2Post: ".",
+    body: "Saya membuka 1-2 proyek per kuartal. Healthcare, sistem internal, atau apapun yang menuntut keandalan jangka panjang.",
+  },
+  en: {
+    h2Pre: "Let's ",
+    italic: "talk",
+    h2Post: ".",
+    body: "I take on 1-2 projects per quarter. Healthcare, internal systems, or anything that demands long-term reliability.",
+  },
+}[lang];
+
+const mailto = `mailto:${profile.email}?subject=${encodeURIComponent(
+  lang === "id" ? "Halo dari haztech.dev" : "Hello from haztech.dev"
+)}`;
+---
+
+<section class="section cta">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-inner">
+        <div>
+          <Eyebrow text={t("section.contact")} />
+          <h2 style="margin-top:1rem;">
+            {copy.h2Pre}<em>{copy.italic}</em>{copy.h2Post}
+          </h2>
+          <p>{copy.body}</p>
+        </div>
+        <div>
+          <a class="cta-mail-link" href={mailto}>
+            {profile.email}
+            <ArrowUpRight size={16} strokeWidth={1.5} />
+          </a>
+          <p class="cta-helper">{t("form.helper")}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

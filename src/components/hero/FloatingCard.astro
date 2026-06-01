@@ -1,0 +1,36 @@
+---
+// src/components/hero/FloatingCard.astro
+// Single floating glass card dengan label mono + display value italic-swap.
+interface Props {
+  position: "a" | "b" | "c";
+  eyebrow: string;
+  valuePre?: string;
+  italicValue?: string | boolean;
+  valuePost?: string;
+  value?: string;
+}
+
+const {
+  position,
+  eyebrow,
+  valuePre = "",
+  italicValue,
+  valuePost = "",
+  value,
+} = Astro.props;
+
+const isItalic = italicValue !== undefined && italicValue !== false;
+const italicText = typeof italicValue === "string" ? italicValue : value;
+---
+
+<div class={`hero-badge hero-badge--${position}`}>
+  <div class="hero-badge-inner">
+    <p class="hero-badge-eyebrow">{eyebrow}</p>
+    <p class="hero-badge-value">
+      {valuePre}
+      {isItalic && italicText && <em>{italicText}</em>}
+      {!isItalic && value}
+      {valuePost}
+    </p>
+  </div>
+</div>

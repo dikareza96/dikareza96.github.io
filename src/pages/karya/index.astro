@@ -1,0 +1,31 @@
+---
+// src/pages/karya/index.astro
+// Projects list (Indonesian default route).
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getProjectsForLang } from "@i18n/utils";
+import { profile } from "@data/profile";
+import Eyebrow from "@components/ui/Eyebrow.astro";
+import ProjectsList from "@components/projects/ProjectsList.astro";
+
+const projects = await getProjectsForLang("id");
+
+const title = `Karya — ${profile.name.id} | ${profile.studio}`;
+const description =
+  "Pilihan project yang dikerjakan: sistem informasi rumah sakit, integrasi PACS, dan modernisasi stack dari PHP legacy ke Bun/Hono/TypeScript.";
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="container projects-page-head">
+    <Eyebrow text="02 — Karya terpilih" />
+    <h1>Karya yang ditelusuri dengan <em>tenang</em>.</h1>
+    <p class="lead">
+      Pilihan dari beberapa tahun terakhir. Setiap project adalah eksplorasi alur
+      kerja klinis yang nyata, bukan latihan teknis untuk menunjukkan stack.
+      Beberapa project bersifat internal rumah sakit — tidak ada link publik.
+    </p>
+  </header>
+
+  <section class="container">
+    <ProjectsList projects={projects} />
+  </section>
+</BaseLayout>

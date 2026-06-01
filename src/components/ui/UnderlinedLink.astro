@@ -1,0 +1,18 @@
+---
+// src/components/ui/UnderlinedLink.astro
+// Animated text CTA dengan underline grow + arrow rotate.
+import { ArrowUpRight } from "lucide-astro";
+
+interface Props {
+  href: string;
+  withArrow?: boolean;
+  class?: string;
+}
+
+const { href, withArrow = true, class: className = "" } = Astro.props;
+---
+
+<a href={href} class:list={["link-underline", className]}>
+  <slot />
+  {withArrow && <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden="true" />}
+</a>

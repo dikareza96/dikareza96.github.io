@@ -1,0 +1,15 @@
+---
+// src/components/ui/Chip.astro
+// Tag chip rectangular pill (technical metadata).
+interface Props {
+  variant?: "default" | "dark";
+  class?: string;
+}
+
+const { variant = "default", class: className = "" } = Astro.props;
+const classes = ["chip", variant === "dark" && "chip-dark", className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<span class={classes}><slot /></span>

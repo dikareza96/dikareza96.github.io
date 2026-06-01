@@ -1,0 +1,28 @@
+---
+// src/pages/404.astro — Custom 404
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import Button from "@components/ui/Button.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const homeHref = lang === "id" ? "/" : "/en";
+---
+
+<BaseLayout title={`${t("404.title")} | Haztech Studio`} description={t("404.body")}>
+  <section class="section" style="min-height: 60vh; display: flex; align-items: center;">
+    <div class="container">
+      <div style="max-width: 600px;">
+        <p class="eyebrow" style="margin-bottom: 1.25rem;">404</p>
+        <h1
+          style="font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 1.5rem;"
+        >
+          {t("404.title")}
+        </h1>
+        <p class="lead" style="margin-bottom: 2rem;">{t("404.body")}</p>
+        <Button href={homeHref} withArrow={true}>{t("404.cta")}</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

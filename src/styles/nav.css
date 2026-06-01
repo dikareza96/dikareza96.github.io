@@ -1,0 +1,286 @@
+/* ============================================================================
+   nav.css — Marquee ribbon + Sticky pill nav + Mobile menu
+   Drop-in dari design-foundation.md §10.6-10.7
+   ============================================================================ */
+
+/* ─── Marquee ribbon (top fixed strip) ─── */
+.ribbon {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  padding: 0.5rem 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.ribbon-track {
+  display: flex;
+  gap: 3.5rem;
+  white-space: nowrap;
+  animation: marquee 38s linear infinite;
+}
+
+.ribbon-track span {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ribbon-track span::after {
+  content: "◆";
+  color: var(--sage);
+  font-size: 0.6rem;
+  /* Decorative — hide from assistive tech */
+  speak: none;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* Reduced motion: marquee jadi text wall kalau cuma matikan animation.
+   Solusi: hide duplicate items, show first 4 static, wrapped. */
+@media (prefers-reduced-motion: reduce) {
+  .ribbon { overflow: hidden; }
+  .ribbon-track {
+    animation: none;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .ribbon-track > span:nth-child(n+5) {
+    display: none;
+  }
+}
+
+/* A11y defensive: pause marquee saat focus inside */
+.ribbon:focus-within .ribbon-track {
+  animation-play-state: paused;
+}
+
+/* ─── Sticky pill navigation ─── */
+.nav-wrap {
+  position: fixed;
+  top: 1.25rem;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  /* Geser ke bawah sedikit untuk akomodasi ribbon */
+  margin-top: 1.75rem;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.55rem 0.55rem 0.55rem 1.4rem;
+  background: rgba(244, 239, 230, 0.78);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-pill);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  box-shadow: var(--shadow-inset-light), var(--shadow-nav);
+  pointer-events: auto;
+  max-width: calc(100% - 2.5rem);
+}
+
+.nav-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.nav-mark-glyph {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  font-size: 0.885rem;
+  color: var(--ink-soft);
+  list-style: none;
+}
+
+.nav-links a {
+  position: relative;
+  padding: 0.35rem 0;
+  transition: color var(--dur-base) var(--spring);
+}
+
+.nav-links a::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: var(--ink);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms var(--spring);
+}
+
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.nav-links a:hover::after,
+.nav-links a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.nav-utility {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ─── Hamburger ─── */
+.hamburger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  position: relative;
+  background: transparent;
+}
+
+.hamburger span {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: 1.5px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition:
+    transform 500ms var(--spring),
+    opacity 300ms var(--spring);
+}
+
+.hamburger span:nth-child(1) { top: 16px; }
+.hamburger span:nth-child(2) { bottom: 16px; }
+
+body.menu-open .hamburger span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+body.menu-open .hamburger span:nth-child(2) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .nav-links,
+  .nav-utility .btn:not(.btn-icon) {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+  }
+  .nav {
+    padding: 0.35rem 0.35rem 0.35rem 1rem;
+    gap: 0.75rem;
+  }
+}
+
+/* ─── Mobile menu overlay ─── */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  background: rgba(244, 239, 230, 0.97);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6rem 2rem 3rem;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 450ms var(--spring),
+    visibility 450ms;
+}
+
+body.menu-open .mobile-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.mobile-menu a {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 9vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  padding: 0.4rem 0;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 500ms var(--spring),
+    transform 600ms var(--spring);
+}
+
+body.menu-open .mobile-menu a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.menu-open .mobile-menu li:nth-child(1) a { transition-delay: 0.10s; }
+body.menu-open .mobile-menu li:nth-child(2) a { transition-delay: 0.17s; }
+body.menu-open .mobile-menu li:nth-child(3) a { transition-delay: 0.24s; }
+body.menu-open .mobile-menu li:nth-child(4) a { transition-delay: 0.31s; }
+body.menu-open .mobile-menu li:nth-child(5) a { transition-delay: 0.38s; }
+
+.mobile-menu em {
+  font-family: var(--font-italic);
+  font-style: italic;
+  color: var(--sage);
+}
+
+/* Forced-colors fallback */
+@media (forced-colors: active) {
+  .nav,
+  .mobile-menu {
+    background: Canvas;
+    color: CanvasText;
+    border-color: CanvasText;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .ribbon {
+    background: CanvasText;
+    color: Canvas;
+  }
+}

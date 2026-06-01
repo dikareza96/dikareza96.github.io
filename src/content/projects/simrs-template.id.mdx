@@ -1,0 +1,50 @@
+---
+title: "SIMRS Frontend Template"
+slug: "simrs-template"
+lang: "id"
+year: 2026
+role: "Solo Engineer — Frontend Architecture"
+stack:
+  - "React 18"
+  - "TypeScript"
+  - "Vite"
+  - "TanStack Router"
+  - "TanStack Query"
+  - "Tailwind v4"
+  - "MSW"
+summary: "Template frontend SIMRS (Sistem Informasi Manajemen Rumah Sakit) yang siap pakai — 19 modul, dari pendaftaran sampai farmasi dan keuangan. Backend pluggable: mock saat demo, REST API nyata di produksi. Open source, lisensi MIT."
+coverAlt: "Dashboard SIMRS dengan sidebar modul dan metrik operasional rumah sakit"
+pubDate: 2026-05-20
+featured: true
+confidential: false
+status: "Active"
+links:
+  github: "https://github.com/dikareza96/simrs-template"
+  caseStudy: true
+---
+
+Setiap proyek SIMRS biasanya dimulai dari nol untuk hal yang sama: struktur modul, routing, manajemen state, tabel data, peran pengguna. Pekerjaan berulang ini memakan waktu sebelum fitur klinis sebenarnya tersentuh. Template ini lahir dari pengalaman membangun sistem rumah sakit nyata — disuling jadi fondasi yang bisa dipakai ulang.
+
+## Yang dibangun
+
+Template SPA frontend-only dengan 19 modul yang mencerminkan alur kerja rumah sakit sesungguhnya:
+
+- **Pelayanan** — pendaftaran, IGD, poliklinik, rawat inap, kamar operasi
+- **Penunjang** — laboratorium, radiologi
+- **Farmasi** — apotek, inventory
+- **Keuangan** — kasir, akuntansi, laporan
+- **Integrasi** — BPJS, dan modul master data
+
+Lengkap dengan 32 komponen design-system, RBAC berbasis peran, i18n bilingual, dan 230 test.
+
+## Keputusan teknis
+
+**Backend pluggable.** Saat demo, MSW (Mock Service Worker) menyajikan data palsu yang konsisten — sistem jalan penuh tanpa server. Di produksi, lapisan yang sama menunjuk ke REST API nyata. Frontend tidak perlu tahu bedanya.
+
+**Type-safe sampai routing.** TanStack Router dengan rute berbasis file, TanStack Query untuk server state, Zustand untuk UI state, React Hook Form + Zod untuk validasi. Setiap lapisan dipilih agar kesalahan tertangkap saat compile, bukan saat dokter sedang memakai sistem.
+
+**Dibuat untuk diserahkan.** Onboarding wizard, katalog komponen, dan dokumentasi modul disertakan supaya tim lain bisa melanjutkan tanpa harus bertanya.
+
+## Hasil
+
+Template berjalan dengan 230 test dan target Lighthouse yang dijaga (aksesibilitas dan layout stability). Dirilis open source dengan lisensi MIT agar bisa dipakai sebagai titik awal proyek SIMRS lain.

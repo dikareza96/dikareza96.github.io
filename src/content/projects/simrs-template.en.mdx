@@ -1,0 +1,50 @@
+---
+title: "SIMRS Frontend Template"
+slug: "simrs-template"
+lang: "en"
+year: 2026
+role: "Solo Engineer — Frontend Architecture"
+stack:
+  - "React 18"
+  - "TypeScript"
+  - "Vite"
+  - "TanStack Router"
+  - "TanStack Query"
+  - "Tailwind v4"
+  - "MSW"
+summary: "A ready-to-use frontend template for SIMRS (Hospital Information Management System) — 19 modules, from registration to pharmacy and finance. Pluggable backend: mock during demos, real REST API in production. Open source, MIT licensed."
+coverAlt: "SIMRS dashboard with a module sidebar and hospital operational metrics"
+pubDate: 2026-05-20
+featured: true
+confidential: false
+status: "Active"
+links:
+  github: "https://github.com/dikareza96/simrs-template"
+  caseStudy: true
+---
+
+Every SIMRS project usually starts from scratch on the same things: module structure, routing, state management, data tables, user roles. This repetitive work eats time before any actual clinical feature is touched. This template grew out of building real hospital systems — distilled into a reusable foundation.
+
+## What I built
+
+A frontend-only SPA template with 19 modules that mirror real hospital workflows:
+
+- **Services** — registration, ER, outpatient clinics, inpatient, operating room
+- **Support** — laboratory, radiology
+- **Pharmacy** — dispensary, inventory
+- **Finance** — cashier, accounting, reports
+- **Integration** — BPJS, plus master data modules
+
+Complete with 32 design-system components, role-based RBAC, bilingual i18n, and 230 tests.
+
+## Technical decisions
+
+**Pluggable backend.** During demos, MSW (Mock Service Worker) serves consistent fake data — the system runs fully without a server. In production, the same layer points to a real REST API. The frontend doesn't need to know the difference.
+
+**Type-safe down to routing.** TanStack Router with file-based routes, TanStack Query for server state, Zustand for UI state, React Hook Form + Zod for validation. Each layer chosen so errors are caught at compile time, not while a doctor is using the system.
+
+**Built to be handed off.** An onboarding wizard, component catalog, and module documentation are included so another team can pick it up without having to ask.
+
+## Outcome
+
+The template runs with 230 tests and held Lighthouse targets (accessibility and layout stability). Released open source under MIT so it can serve as a starting point for other SIMRS projects.

@@ -1,0 +1,103 @@
+---
+// src/components/projects/ProjectHero.astro
+// Detail page hero — eyebrow + breadcrumb + counter pills + title + summary + cover.
+import { ArrowLeft, ArrowUpRight } from "lucide-astro";
+import type { CollectionEntry } from "astro:content";
+import { getLangFromUrl } from "@i18n/utils";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  index: number;
+  total: number;
+}
+
+const { project, index, total } = Astro.props;
+const { data } = project;
+const lang = getLangFromUrl(Astro.url);
+
+const counter = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+const baseHref = lang === "id" ? "/karya" : "/en/work";
+const backLabel = lang === "id" ? "Kembali ke karya" : "Back to work";
+const eyebrowText = lang === "id" ? "Studi kasus" : "Case study";
+const liveLabel = lang === "id" ? "Kunjungi situs" : "Visit site";
+const githubLabel = "GitHub";
+
+const statusActive = data.status === "Active";
+// Modulate placeholder gradient based on slug hash so each project has stable variant
+const placeholderVariant = (data.slug.charCodeAt(0) % 3) + 1;
+---
+
+<header class="project-detail-hero">
+  <a href={baseHref} class="project-back-link">
+    <ArrowLeft size={14} strokeWidth={1.5} aria-hidden="true" />
+    {backLabel}
+  </a>
+
+  <div class="project-detail-eyebrow">
+    <span class="project-counter">{counter}</span>
+    <span class="project-counter-label">— {eyebrowText}</span>
+  </div>
+
+  <h1 class="project-detail-title">{data.title}</h1>
+
+  <div class="project-detail-pills">
+    {data.confidential && (
+      <span class="project-confidential">Confidential</span>
+    )}
+    <span class:list={["project-status", { "is-active": statusActive }]}>
+      {data.status}
+    </span>
+  </div>
+
+  <p class="project-detail-summary">{data.summary}</p>
+
+  {(data.links.live || data.links.github) && (
+    <div class="project-detail-links">
+      {data.links.live && (
+        <a
+          href={data.links.live}
+          class="project-link with-arrow"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          {liveLabel}
+          <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden="true" />
+        </a>
+      )}
+      {data.links.github && (
+        <a
+          href={data.links.github}
+          class="project-link with-arrow"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          {githubLabel}
+          <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden="true" />
+        </a>
+      )}
+    </div>
+  )}
+  {data.confidential && !data.links.live && !data.links.github && (
+    <p class="project-link-note">
+      {lang === "id"
+        ? "Sistem internal — tidak ada akses publik"
+        : "Internal system — no public access"}
+    </p>
+  )}
+
+  <div class="project-detail-cover">
+    <div class="project-detail-cover-frame">
+      <div
+        class:list={["project-card-placeholder", `placeholder-${placeholderVariant}`]}
+        aria-hidden="true"
+      ></div>
+      <img
+        src={`/covers/${data.slug}.png`}
+        alt={data.coverAlt}
+        class="project-detail-cover-img"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </div>
+</header>

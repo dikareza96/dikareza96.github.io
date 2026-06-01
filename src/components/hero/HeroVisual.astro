@@ -1,0 +1,50 @@
+---
+// src/components/hero/HeroVisual.astro
+// Frame placeholder gradient + 3 floating glass cards.
+import { getLangFromUrl } from "@i18n/utils";
+import FloatingCard from "@components/hero/FloatingCard.astro";
+
+const lang = getLangFromUrl(Astro.url);
+
+const cards = {
+  id: {
+    a: { eyebrow: "Sejak", value: "2019", italicValue: true },
+    b: { eyebrow: "Fokus", valuePre: "Healthcare ", italicValue: "systems" },
+    c: { eyebrow: "Stack", valuePre: "Bun · ", italicValue: "Hono", valuePost: " · TS" },
+  },
+  en: {
+    a: { eyebrow: "Since", value: "2019", italicValue: true },
+    b: { eyebrow: "Focus", valuePre: "Healthcare ", italicValue: "systems" },
+    c: { eyebrow: "Stack", valuePre: "Bun · ", italicValue: "Hono", valuePost: " · TS" },
+  },
+}[lang];
+---
+
+<div class="hero-visual">
+  <div class="hero-visual-frame">
+    <div class="hero-visual-inner">
+      <div class="hero-visual-placeholder" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <FloatingCard
+    position="a"
+    eyebrow={cards.a.eyebrow}
+    italicValue={cards.a.value}
+  />
+
+  <FloatingCard
+    position="b"
+    eyebrow={cards.b.eyebrow}
+    valuePre={cards.b.valuePre}
+    italicValue={cards.b.italicValue}
+  />
+
+  <FloatingCard
+    position="c"
+    eyebrow={cards.c.eyebrow}
+    valuePre={cards.c.valuePre}
+    italicValue={cards.c.italicValue}
+    valuePost={cards.c.valuePost}
+  />
+</div>

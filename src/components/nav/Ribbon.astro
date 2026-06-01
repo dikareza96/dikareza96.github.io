@@ -1,0 +1,23 @@
+---
+// src/components/nav/Ribbon.astro
+// Top fixed marquee strip dengan status info.
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// 4 items, di-duplicate untuk seamless loop
+const items = [
+  t("marquee.available"),
+  t("marquee.based"),
+  t("marquee.specialist"),
+  t("marquee.stack"),
+];
+---
+
+<aside class="ribbon" aria-label="Status" role="region">
+  <div class="ribbon-track" aria-hidden="false">
+    {items.map((item) => <span>{item}</span>)}
+    {items.map((item) => <span aria-hidden="true">{item}</span>)}
+  </div>
+</aside>

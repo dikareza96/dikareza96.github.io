@@ -1,0 +1,42 @@
+---
+// src/components/projects/ProjectMeta.astro
+// Meta rail untuk detail page: year, role, stack count, status.
+import type { CollectionEntry } from "astro:content";
+import { getLangFromUrl } from "@i18n/utils";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const lang = getLangFromUrl(Astro.url);
+
+// Bilingual labels
+const labels = lang === "id"
+  ? { year: "Tahun", role: "Peran", stack: "Stack", status: "Status" }
+  : { year: "Year", role: "Role", stack: "Stack", status: "Status" };
+
+const stackCountLabel = lang === "id"
+  ? `${data.stack.length} teknologi`
+  : `${data.stack.length} technologies`;
+---
+
+<div class="project-meta-rail">
+  <div class="project-meta-item">
+    <p class="project-meta-label">{labels.year}</p>
+    <p class="project-meta-value">{data.year}</p>
+  </div>
+  <div class="project-meta-item">
+    <p class="project-meta-label">{labels.role}</p>
+    <p class="project-meta-value">{data.role}</p>
+  </div>
+  <div class="project-meta-item">
+    <p class="project-meta-label">{labels.stack}</p>
+    <p class="project-meta-value">{stackCountLabel}</p>
+  </div>
+  <div class="project-meta-item">
+    <p class="project-meta-label">{labels.status}</p>
+    <p class="project-meta-value">{data.status}</p>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+/* ============================================================================
+   global.css — Single entry stylesheet, imports semua tokens & components
+   dalam urutan yang benar (cascade order).
+   ============================================================================ */
+
+/* 1. Tokens (CSS custom properties — must be first) */
+@import "./tokens.css";
+
+/* 2. Base reset + body + atmospheric layers + container */
+@import "./base.css";
+
+/* 3. Typography (h1-h5, eyebrow, highlight, reveal) */
+@import "./typography.css";
+
+/* 4. Components — order matters for specificity */
+@import "./nav.css";
+@import "./ui.css";
+@import "./hero.css";
+@import "./sections.css";
+@import "./bento.css";
+@import "./projects.css";
+@import "./project-detail.css";
+@import "./footer.css";
